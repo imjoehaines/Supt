@@ -1,0 +1,7 @@
+## Interface: 50400
+## Author: Infected Mushroom
+## Title: Supt
+## Version: 1.0
+## Notes: Displays your successful interrupts
+
+main.lua
