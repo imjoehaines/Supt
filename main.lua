@@ -1,3 +1,17 @@
+----------------
+-- Config
+--
+local x, y = 0, 150         -- x,y positioning (two numbers)
+local displayDuration = 3   -- number of seconds to keep display on screen (one number)
+local fadeDuration = 1.5    -- number of seconds to fade the display (one number)
+local fontSize = 14         -- size of the font (one number)
+local fontFlag = "OUTLINE"  -- font details (OUTLINE, THICKOUTLINE or MONOCHROME)
+
+local alsoPrint = false     -- also print to the chatlog - does NOT send to other players! (true/false)
+local showMobName = true    -- show the mob name from the output (true/false)
+
+-- End Config
+----------------
 local addon, ns = ...
 local playerName, _ = UnitName("player")
 local _, class = UnitClass("player")
@@ -10,10 +24,21 @@ frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 local display = frame:CreateFontString(nil, "OVERLAY")
-display:SetFont(fontFamily, 14, "OUTLINE")
-display:SetPoint("CENTER", UIParent, "CENTER", 0, 150)
+display:SetFont(fontFamily, fontSize, fontFlag)
+display:SetPoint("CENTER", UIParent, "CENTER", x, y)
 display:SetText("AAA")
-display:SetAlpha(0)
+frame:SetAlpha(0)
+
+local ag = frame:CreateAnimationGroup()
+local a4 = ag:CreateAnimation("Alpha")
+a4:SetStartDelay(displayDuration)
+a4:SetDuration(fadeDuration)
+a4:SetSmoothing("IN")
+a4:SetChange(-1)
+
+ag:SetScript("OnFinished", function(self, requested)
+    frame:SetAlpha(0)
+end)
 
 local function eventHandler(self, event, ...)
   if event == "ADDON_LOADED" then
@@ -23,21 +48,12 @@ local function eventHandler(self, event, ...)
   else 
     local _, subEvent, _, _, sourceName, _, _, _, destName, _, _, _, _, _, spellID = ...
     if subEvent == "SPELL_INTERRUPT" and sourceName == playerName then
-      --print("You interrupted "..destName.."'s "..GetSpellLink(spellID))
-      display:SetAlpha(1)
-      display:SetText("You interrupted "..destName.."'s "..GetSpellLink(spellID))
-      lastShown = GetTime()
+      if alsoPrint then print("You interrupted ".. (showMobName and destName.."'s " or "") ..GetSpellLink(spellID)) end
+      frame:SetAlpha(1)
+      display:SetText("You interrupted ".. (showMobName and destName.."'s " or "") ..GetSpellLink(spellID))
+      ag:Play()
     end
   end
 end
 
-local function update(...)
-  if (lastShown < GetTime() - 3) then
-    local alpha = display:GetAlpha()
-    if alpha ~= 0 then
-      display:SetAlpha(alpha - .01)
-    end
-  end
-end
-frame:SetScript("OnUpdate", update)
 frame:SetScript("OnEvent", eventHandler)
