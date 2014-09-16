@@ -1,8 +1,8 @@
 ----------------
--- Config
---
-local x, y = 0, 150         -- x,y positioning (two numbers)
-local displayDuration = 3   -- number of seconds to keep display on screen (one number)
+-- Config ------
+----------------
+local x, y = 0, 150         -- x, y positioning (two numbers)
+local displayDuration = 3   -- number of seconds to keep the display on screen (one number)
 local fadeDuration = 1.5    -- number of seconds to fade the display (one number)
 local fontSize = 14         -- size of the font (one number)
 local fontFlag = "OUTLINE"  -- font details (OUTLINE, THICKOUTLINE or MONOCHROME)
@@ -10,14 +10,13 @@ local fontFlag = "OUTLINE"  -- font details (OUTLINE, THICKOUTLINE or MONOCHROME
 local alsoPrint = false     -- also print to the chatlog - does NOT send to other players! (true/false)
 local showMobName = true    -- show the mob name from the output (true/false)
 
--- End Config
 ----------------
+
 local addon, ns = ...
 local playerName, _ = UnitName("player")
 local _, class = UnitClass("player")
 local colour1 = RAID_CLASS_COLORS[class]
 local fontFamily = "Interface\\AddOns\\tekticles\\CalibriBold.ttf"
-local lastShown = 0 
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
