@@ -4,7 +4,7 @@
 local x, y = 0, 150         -- x, y positioning (two numbers)
 local displayDuration = 3   -- number of seconds to keep the display on screen (one number)
 local fadeDuration = 1.5    -- number of seconds to fade the display (one number)
-local fontSize = 12         -- size of the font (one number)
+local fontSize = 14         -- size of the font (one number)
 local fontFlag = "OUTLINE"  -- font details (OUTLINE, THICKOUTLINE or MONOCHROME)
 
 local alsoPrint = false     -- also print to the chatlog - does NOT send to other players! (true/false)
