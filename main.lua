@@ -4,7 +4,7 @@
 local x, y = 0, 150         -- x, y positioning (two numbers)
 local displayDuration = 3   -- number of seconds to keep the display on screen (one number)
 local fadeDuration = 1.5    -- number of seconds to fade the display (one number)
-local fontSize = 14         -- size of the font (one number)
+local fontSize = 12         -- size of the font (one number)
 local fontFlag = "OUTLINE"  -- font details (OUTLINE, THICKOUTLINE or MONOCHROME)
 
 local alsoPrint = false     -- also print to the chatlog - does NOT send to other players! (true/false)
@@ -16,7 +16,7 @@ local addon, ns = ...
 local playerName, _ = UnitName("player")
 local _, class = UnitClass("player")
 local colour1 = RAID_CLASS_COLORS[class]
-local fontFamily = "Interface\\AddOns\\tekticles\\CalibriBold.ttf"
+local fontFamily = "Interface\\AddOns\\Supt\\Roboto-Bold.ttf"
 
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
@@ -28,14 +28,14 @@ display:SetPoint("CENTER", UIParent, "CENTER", x, y)
 display:SetText("AAA")
 frame:SetAlpha(0)
 
-local ag = frame:CreateAnimationGroup()
-local a4 = ag:CreateAnimation("Alpha")
-a4:SetStartDelay(displayDuration)
-a4:SetDuration(fadeDuration)
-a4:SetSmoothing("IN")
-a4:SetChange(-1)
+local animGroup = frame:CreateAnimationGroup()
+local animation = animGroup:CreateAnimation("Alpha")
+animation:SetStartDelay(displayDuration)
+animation:SetDuration(fadeDuration)
+animation:SetSmoothing("IN")
+animation:SetChange(-1)
 
-ag:SetScript("OnFinished", function(self, requested)
+animGroup:SetScript("OnFinished", function(self, requested)
     frame:SetAlpha(0)
 end)
 
@@ -50,7 +50,7 @@ local function eventHandler(self, event, ...)
       if alsoPrint then print("You interrupted ".. (showMobName and destName.."'s " or "") ..GetSpellLink(spellID)) end
       frame:SetAlpha(1)
       display:SetText("You interrupted ".. (showMobName and destName.."'s " or "") ..GetSpellLink(spellID))
-      ag:Play()
+      animGroup:Play()
     end
   end
 end
