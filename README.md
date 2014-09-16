@@ -12,3 +12,5 @@ Supt is simple interrupt notifier for World of Warcraft. It does **not** announc
   * fade duration
   * also print (output to chat frame too - allows spell links to be clicked
   * hide mob name (only show the spell interrupted, not the name of the mob)
+  * font size
+  * font flag (outline, thickoutline, monochrome)
