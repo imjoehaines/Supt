@@ -15,7 +15,7 @@ local showMobName = true    -- show the mob name in the output (true/false)
 local addon, ns = ...
 local playerName, _ = UnitName("player")
 local _, class = UnitClass("player")
-local colour1 = RAID_CLASS_COLORS[class]
+local colour1 = RAID_CLASS_COLORS[class].colorStr
 local fontFamily = "Interface\\AddOns\\Supt\\Roboto-Bold.ttf"
 
 local frame = CreateFrame("Frame")
@@ -42,7 +42,7 @@ end)
 local function eventHandler(self, event, ...)
   if event == "ADDON_LOADED" then
     if ... == addon then
-      print("|c"..colour1.colorStr..addon.."|r loaded!")
+      print("|c"..colour1..addon.."|r loaded!")
     end
   else 
     local _, subEvent, _, _, sourceName, _, _, _, destName, _, _, _, _, _, spellID = ...
